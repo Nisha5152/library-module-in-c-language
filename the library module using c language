@@ -1,0 +1,245 @@
+#include <stdio.h>
+#include<string.h>
+int stock=0,bid=200,f=0,j,l=1;
+void viewbook();
+void lendbook();
+void return_book();
+void report_book();
+struct studend{
+        char n[100],pass[100];
+        int id;
+    }s[100];
+struct book{
+    char an[100],bn[100];
+    int pri,id,get_book;
+}b[100];
+
+FILE *x;
+int main()
+{
+    int ch,m,i,id,o,q,r,t,x=1,y=0,ab,lbid,k;
+    char p[100],a[100];
+    while(1)
+    {
+    printf(".......................library management system.........................\n");
+    printf("Enter your choice:\n");
+    printf("1.Admin\n2.Students\n3.Exit\n");
+     scanf("%d",&ch);
+     if(ch==1)
+     {
+
+             printf("Enter Your Userid:\n");
+             scanf("%d",&id);
+             printf("Enter your Password:\n");
+             scanf("%s",p);
+                if(id==101&&strcmp(p,"100")==0)
+                {
+             printf("\n...........LOGIN SUCCESSFULY......\n");
+             
+             while(1)
+             {
+                 printf("1.Add book\n2.View Book\n3.Report book\n4.Exit\n");
+                 scanf("%d",&o);
+                 if(o==1)
+                 {
+                     
+                     printf("\n Enter How many books added:\n");
+                     scanf("%d",&ab);
+                     for(i=1;i<=ab;i++)
+                     {
+                    // printf("Enter the book Id:\n");
+                    //  scanf("%d",&b[i].id);
+                     b[i].id=bid;
+                     bid++;
+                     printf("Enter your Book Name:\n");
+                     scanf("%s",b[i].bn);
+                     printf("Enter your Author Name:\n");
+                     scanf("%s",b[i].an);
+                     printf("Enter your Book Price:\n");
+                     scanf("%d",&b[i].pri);
+                     stock++;
+                     printf("\nBooks added SUCCESSFULY\n");
+                     }
+                 }
+                 if(o==2)
+                 {
+                    viewbook(); 
+                 }
+                 if(o==3)
+                 {
+                     printf("............................report..............................");
+                     report_book();
+                 }
+                 if(o==4)
+                 {
+                     printf("\n..................................Exit...........................\n");
+                     break;
+                 }
+             }
+                }
+            else
+            {
+             printf("\n...........Invaild Pls check user id and password........."); 
+            }
+        
+     }
+     if(ch==2)
+ {
+         while(1)
+    {
+         printf("1.signup\n2.Login\n3.Exit\n");
+         scanf("%d",&m);
+         if(m==1)
+         {
+            for(i=x;i<=x;i++)
+            {
+             printf("Enter your Name:\n");
+             scanf("%s",s[i].n);
+            printf("Enter Your Userid:\n");
+            scanf("%d",&s[i].id);
+             printf("Enter your Password:\n");
+             scanf("%s",s[i].pass);
+             printf("\nSignup Successfully\n");
+            }
+            x++;
+         }
+         if(m==3)
+         {
+             printf("\n.................................Exit............................\n");
+            break;
+         }
+         if(m==2)
+         {
+             printf("Enter Your Userid:\n");
+             scanf("%d",&id);
+             printf("Enter your Password:\n");
+             scanf("%s",p);
+             for(i=1;i<=10;i++)
+             {
+            if(s[i].id==id&&strcmp(s[i].pass,p)==0)
+            l=1;
+            break;
+            }
+            if(l==1){
+             printf("\n...........LOGIN SUCCESSFULY......\n");
+             y++;
+             while(1)
+             {
+             printf("\n1.Lend Book\n2.return book\n3.View Book\n4.Exit\n");
+             scanf("%d",&k);
+             if(k==1)
+        {
+            printf("\n............................Lend Book............................\n");
+            lendbook();
+        }
+        if(k==2)
+        {
+            printf("\n............................Return Book............................\n");
+            return_book();
+            
+        }
+          if(k==3)
+        {
+            printf("\n............................View Book..............................\n");
+            viewbook();
+        }
+        if(k==4)
+        {
+            printf("\n.................................Exit............................\n");
+            break;
+
+        }
+        
+             }
+            }
+        else
+             {
+                 printf("Please Enter vaild id and password");
+             }
+        
+            }
+        
+        
+    }
+ }
+ if(ch==3){
+     printf("\n.............................Exit................................\n");
+     break;
+ }
+    
+}
+}
+
+void viewbook()
+ {
+     int j;
+     printf("List of book in stock:\n");
+     printf("\n-----------------------------------------------------------\n");
+     printf("Book ID\tBook Name\tAuthor Name\tBook Price\n");
+     for(j=1;j<=stock;j++)
+     {
+         if(b[j].id!=0)
+         {
+         printf("%d\t%s\t\t%s\t\t%d\n",b[j].id,b[j].bn,b[j].an,b[j].pri);
+         }
+     }
+     printf("-----------------------------------------------------------\n");
+ }
+ 
+ void lendbook()
+ {
+     int i,land,z=0;
+     printf("Enter book ID:\n");
+     scanf("%d",&land);
+     for(i=1;i<=stock;i++)
+     
+     {
+         if(b[i].id==land){
+            f=1;
+            j=b[i].id;
+            b[i].id=0;
+            z++;
+            break;
+         }
+         else
+            f=0;  
+    }
+        printf(f==1?"book has been lended Successfully\n":"book not Availabel\n");
+     
+ }
+void return_book()
+{
+    int i,restore,f=1;
+    printf("Enter book id:\n");
+    scanf("%d",&restore);
+    for(i=1;i<=stock;i++)
+    {
+        if(restore==j)
+        {
+            b[i].id=j;
+            printf("return book SUCCESSFULY\n");
+            break;
+        }
+        else{
+            f=0;
+        }
+    }
+    printf(f==1?" ":"Please enter vaild book id\n");
+}
+
+void report_book()
+{
+  int j;
+     fprintf(x,"List of book in stock:\n");
+     fprintf(x,"\n-----------------------------------------------------------\n");
+     fprintf(x,"studend ID\tBook Name\tAuthor Name\tBook Price\n");
+     for(j=1;j<=stock;j++)
+     {
+         if(b[j].id!=0)
+         {
+         fprintf(x ,"%d\t%s\t\t%s\t\t%d\n",b[j].id,b[j].bn,b[j].an,b[j].pri);
+         }
+     }
+     fprintf(x,"-----------------------------------------------------------\n");  
+}
+
